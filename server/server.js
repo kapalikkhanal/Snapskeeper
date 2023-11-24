@@ -18,8 +18,9 @@ const path = require('path')
 const fs = require('fs')
 
 const mime = require('mime-types');
+const dataFilePath = path.join(__dirname, 'data.json');
 
-
+let folderName;
 let filePath; // Declare filePath at a higher scope
 
 const timestamp = Date.now(); // Get the current timestamp
@@ -44,6 +45,24 @@ const drive = google.drive({
     auth: ouath2Client
 })
 
+// Function to read data from the file
+const readDataFromFile = () => {
+    try {
+        const data = fs.readFileSync(dataFilePath, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+};
+
+console.log(folderName);
+
+// Function to write data to the file
+const writeDataToFile = (data) => {
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+};
+
+
 // const pathName = path.join(__dirname, 'uploads', 'IMG_1847.JPG');
 
 // Middleware to parse incoming JSON data
@@ -54,13 +73,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 async function uploadFiles(res) {
     try {
         console.log("Trying to upload to drive.")
+
+        const folderExists = await checkFolderExists(folderName);
+        console.log(folderExists)
+
+        if (!folderName) {
+            console.log('Folder does not exist on Google Drive.');
+            res.status(400).send('Folder does not exist on Google Drive.');
+            return;
+        }
+
+        // Continue with the file upload to the existing folder
         const fileExtension = path.extname(filePath); // Get the file extension
         const dynamicMimeType = mime.lookup(fileExtension); // Get the MIME type based on the file extension
+
+        console.log('Uploading to folder:', folderName);
+        console.log('Folder ID:', [folderExists.id]);
 
         const response = await drive.files.create({
             requestBody: {
                 name: `image_${timestamp}.jpg`,
-                mimeType: dynamicMimeType
+                mimeType: dynamicMimeType,
+                parents: [folderExists.id], // Use the folder ID as the parent
             },
             media: {
                 mimeType: dynamicMimeType,
@@ -72,12 +106,14 @@ async function uploadFiles(res) {
         console.log('Image has been uploaded to Drive Successfully.');
 
         // Send success response to the frontend
-        // res.send('Image has been uploaded to Drive Successfully.');
+        res.send('Image has been uploaded to Drive Successfully.');
 
     } catch (error) {
         console.log(error.message);
+        // res.status(500).send('Internal Server Error');
     }
 }
+
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -92,10 +128,28 @@ const upload = multer({
 
             filePath = path.join(__dirname, 'uploads', uniqueFilename);
 
-            uploadFiles();
+            // uploadFiles();
         },
     }),
 });
+
+async function checkFolderExists(folderName) {
+    try {
+        const response = await drive.files.list({
+            q: `mimeType='application/vnd.google-apps.folder' and name='${folderName}'`,
+            spaces: 'drive',
+        });
+
+        if (response.data.files.length > 0) {
+            return response.data.files[0]; // Return the first matching folder
+        } else {
+            return null; // Return null if the folder does not exist
+        }
+    } catch (error) {
+        console.error('Error checking folder existence:', error);
+        return false;
+    }
+}
 
 // Serve HTML form
 app.get('/', (req, res) => {
@@ -167,6 +221,36 @@ app.post('/submit', (req, res) => {
         }
     });
 });
+
+// Handle form submission
+app.post('/code', async (req, res) => {
+    const { code } = req.body;
+    // Print the data received from React
+    console.log('Received data from React:');
+    console.log('Code:', code);
+
+    try {
+        const folderExists = await checkFolderExists(code);
+        console.log('Folder Exists:', folderExists);
+
+        if (folderExists && folderExists.id) {
+            console.log('Folder ID:', folderExists.id);
+            console.log('Folder already exists on Google Drive.');
+            res.status(200).send('Folder exists on Google Drive.');
+
+            // Read existing data from the file
+            folderName = code;
+            console.log('folderName:', folderName);
+        } else {
+            console.log('Folder does not exist on Google Drive or ID is undefined.');
+            res.status(404).send('Folder does not exist on Google Drive.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {

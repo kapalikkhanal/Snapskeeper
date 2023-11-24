@@ -149,7 +149,7 @@ function ContactForm() {
              p-4
              font-bold">
                 Go back to
-                <button onClick={() => { router.push('/') }} className='text-gray-200 p-1 m-2 bg-blue-900 rounded-2xl'>&nbsp;Upload photos.&nbsp;</button>
+                <button onClick={() => { router.push('/uploadImage') }} className='text-gray-200 p-1 m-2 bg-blue-900 rounded-2xl'>&nbsp;Upload photos.&nbsp;</button>
             </footer>
         </div>
     );
