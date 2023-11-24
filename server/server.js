@@ -1,6 +1,18 @@
 const express = require('express');
 const multer = require('multer');
-const { google } = require('googleapis');
+const { google } = require('googleapis')
+require('dotenv').config();
+
+// Nodemaile
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+
+const app = express();
+const port = process.env.PORT || 3001;
+
+// Enable CORS
+app.use(cors());
 
 const path = require('path')
 const fs = require('fs')
@@ -10,20 +22,14 @@ const mime = require('mime-types');
 
 let filePath; // Declare filePath at a higher scope
 
-const { v4: uuidv4 } = require('uuid');
-const { file } = require('googleapis/build/src/apis/file');
-
-const app = express();
-const port = 3001;
-
 const timestamp = Date.now(); // Get the current timestamp
 
 //These should be inside env
-const CLIENT_ID = '1057607245904-a1apulb89ssp4is96sgg5mqlia0kbgq5.apps.googleusercontent.com'
-const CLIENT_SECRET = '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'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
-const REFRESH_TOKEN = '1//04l64UaFDFdO6CgYIARAAGAQSNwF-L9IrxNYEEqvsaVn4Funmy7P7zacVPkMo5Q6oZS2bF62dkau5cGSw-uxmTbIeCpBEwnDOLxQ'
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 const ouath2Client = new google.auth.OAuth2(
     CLIENT_ID,
@@ -40,14 +46,18 @@ const drive = google.drive({
 
 // const pathName = path.join(__dirname, 'uploads', 'IMG_1847.JPG');
 
-async function uploadFiles() {
+// Middleware to parse incoming JSON data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+async function uploadFiles(res) {
     try {
         console.log("Trying to upload to drive.")
         const fileExtension = path.extname(filePath); // Get the file extension
         const dynamicMimeType = mime.lookup(fileExtension); // Get the MIME type based on the file extension
 
         const response = await drive.files.create({
-
             requestBody: {
                 name: `image_${timestamp}.jpg`,
                 mimeType: dynamicMimeType
@@ -57,14 +67,17 @@ async function uploadFiles() {
                 body: fs.createReadStream(filePath)
             }
         });
+
         console.log(response.data);
-        console.log('Image has been uploaded to Drive Successfully.')
+        console.log('Image has been uploaded to Drive Successfully.');
+
+        // Send success response to the frontend
+        // res.send('Image has been uploaded to Drive Successfully.');
+
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
     }
 }
-
-// uploadFiles();
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -84,10 +97,81 @@ const upload = multer({
     }),
 });
 
+// Serve HTML form
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+// Handle form submission
+app.post('/submit', (req, res) => {
+    const { name, phone, email } = req.body;
+    // Print the data received from React
+    console.log('Received data from React:');
+    console.log('Name:', name);
+    console.log('Phone:', phone);
+    console.log('Email:', email);
+
+    // Use nodemailer to send email
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL, // replace with your email
+            pass: process.env.PASSWORD, // replace with your email password or app password
+        }
+    });
+
+    const mailOptions = {
+        from: "Snaps Capture",
+        to: email,
+        subject: 'Thank you for contacting us!',
+        html: `
+            <p>Dear ${name},</p>
+            <p>Thank you for choosing our photo uploading service! We appreciate your trust in us.</p>
+            <p>To proceed with obtaining your QR code, please follow the instructions below:</p>
+            <p><strong>Payment Details:</strong></p>
+            <p>The service fee for obtaining your QR code is Rs. 1000. You can make the payment through any secure payment gateway [eSewa, Khalti, IME Pay, etc.].</p>
+            <p><strong>Payment Process:</strong></p>
+            <ol>
+                <li>Scan the attached QR code using your preferred payment app.</li>
+                <li>Enter the amount as Rs. 1000.</li>
+                <li>Confirm the payment.</li>
+            </ol>
+            <p><strong>Note:</strong> Please ensure that you use the payment details provided here to avoid any complications in the process.</p>
+            <p><strong>Payment QR Code:</strong></p>
+            <img src="cid:qrCodeImage" alt="Payment QR Code" />
+            <p><strong>Next Steps:</strong></p>
+            <p>Once the payment is successfully processed, our team will initiate the creation of your QR code for the photo uploading service. Please allow up to 8hrs for the process to be completed.</p>
+            <p>We would like to express our gratitude for choosing our photo uploading service. We understand the importance of your time and trust, and we assure you that we are dedicated to providing you with a seamless experience.</p>
+            <p><strong>Contact Information:</strong></p>
+            <p>If you encounter any issues during the payment process or have any questions, feel free to reach out to us at kapalikkhanal@gmail.com or +977-9860364927. We are here to assist you.</p>
+            <p>Thank you once again for choosing us. We look forward to serving you!</p>
+            <p><strong>Best regards,</strong></p>
+            <p>Kapalik Khanal<br> Snapscapture.com</p>
+        `,
+        attachments: [
+            {
+                filename: 'qrCode.jpg',
+                path: './public/qrCode.jpg',
+                cid: 'qrCodeImage',  // Set the content ID for the inline image
+            },
+        ],
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.send('Email sent successfully!');
+        }
+    });
+});
+
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
         console.log('File received:', req.file);
-        console.log("Image Upload Successful.");
+        await uploadFiles(res); // Pass the 'res' object to the 'uploadFiles' function
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
@@ -98,3 +182,5 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+
+

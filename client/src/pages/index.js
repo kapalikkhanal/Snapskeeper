@@ -1,26 +1,51 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Navbar from './components/navBar/navBar';
+import ParticlesJS from './components/particle/index.js';
+import Footer from './components/footer';
+import { useToast } from '@chakra-ui/react';
 
 function App() {
+  const toast = useToast();
   const [selectedFile, setSelectedFile] = useState(null);
   const [Emage, setEmage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setSelectedFile(file)
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setEmage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) {
+      // No image selected, show the message to upload an image
+      setEmage(null);
+      setSelectedFile(null);
+      setUploadMessage('Choose an image to upload.');
+      return;
     }
+
+    // Image selected
+    setSelectedFile(file);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setEmage(e.target.result);
+      setUploadMessage(''); // Clear the message when an image is selected
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleUpload = async () => {
+    // Check if selectedFile is null or empty
+    if (!selectedFile) {
+      // Handle the error or set an error state
+      console.error('No file selected for upload.');
+      // You might want to set an error state here if needed
+      return;
+    }
+
+    setLoading(true);
+
     const formData = new FormData();
     formData.append('image', selectedFile);
 
@@ -30,65 +55,94 @@ function App() {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log('File uploaded successfully. File ID:', response.data.fileId);
+      console.log(response)
+      console.log('File uploaded successfully.');
     } catch (error) {
       console.error('Error uploading file:', error);
+      setLoading(false);
+      setSuccess(false);
+    } finally {
+      setLoading(false);
+      setSuccess(true);
     }
   };
 
-  return (
-    <div>
-      <div>
-        <Navbar />
-      </div>
-      <div>
-        <h1 className='text-black font-medium text-3xl text-center p-5 mt-8'>
-          Uploads the moments your captured.
-        </h1>
-      </div>
-      <div className='flex justify-center items-center flex-col mt-10'>
-        <h1 className='text-black'>Click on the Image to Upload.</h1>
-        <h1>Photo Gallery</h1>
-        <div>
-          <label htmlFor="upload-button">
-            <div
-              style={{
-                width: '300px',
-                height: '300px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                overflow: 'hidden',
-              }}
-              className='border border-gray-500 mt-2 mb-4 shadow-inner bg-gray-300 drop-shadow-2xl'
-            >
-              {Emage ? (
-                <img
-                  src={Emage}
-                  alt="Preview"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              ) : (
-                <img
-                  src="./test.jpg"
-                  alt="Upload Image"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              )}
+  if (success) {
+    const alertMessage = success ? 'Image sent successfully.' : 'Error sending Image. Please try again.';
+    toast({
+      title: alertMessage,
+      status: success ? 'success' : 'error',
+      duration: 3000,
+      isClosable: true,
+      position: 'top-right',
+    });
+  }
 
-            </div>
-          </label>
+  return (
+    <>
+      <ParticlesJS />
+      <div>
+        <div>
+          <Navbar />
         </div>
-        <input className='hidden' type="file" ref={fileInputRef} onChange={handleFileChange} id='upload-button' />
-        <button className='bg-black p-4 mt-10 rounded-2xl w-40'
-          onClick={handleUpload}>
-          Upload Image
-        </button>
+        <div>
+          <h1 className='text-black font-medium text-3xl text-center p-5 mt-8'>
+            Uploads the moments you captured.
+          </h1>
+        </div>
+        <div className='flex justify-center items-center flex-col mt-10'>
+          <h1 className='text-black font-semibold'>Click on the Image to Upload.</h1>
+          <h1 className='text-black font-bold'>Photo Gallery.</h1>
+          <div>
+            <label htmlFor="upload-button">
+              <div
+                style={{
+                  width: '300px',
+                  height: '300px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  overflow: 'hidden',
+                }}
+                className='border border-gray-500 mt-2 mb-4 shadow-inner bg-gray-300 drop-shadow-2xl'
+              >
+                {Emage ? (
+                  <img
+                    src={Emage}
+                    alt="Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <img
+                    src="./test.jpg"
+                    alt="Upload Image"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
+              </div>
+            </label>
+          </div>
+          <input className='hidden' type="file" ref={fileInputRef} onChange={handleFileChange} id='upload-button' />
+          <div>
+            {loading ? 'Uploading, Please wait...' : success ? 'Image upload successful.' : 'Choose an Image from Gallery.'}
+          </div>
+          <button
+            className='bg-black text-white p-4 mt-10 rounded-2xl w-48 mb-24'
+            onClick={handleUpload}
+            disabled={loading}
+          >
+            {loading ? 'Uploading' : success ? 'Upload New Image' : 'Upload Image'}
+          </button>
+        </div>
+
+        {/* Footer */}
+        <div>
+          <Footer />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
