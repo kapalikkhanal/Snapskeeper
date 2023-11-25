@@ -44,25 +44,6 @@ const drive = google.drive({
     version: 'v3',
     auth: ouath2Client
 })
-
-// Function to read data from the file
-const readDataFromFile = () => {
-    try {
-        const data = fs.readFileSync(dataFilePath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return [];
-    }
-};
-
-console.log(folderName);
-
-// Function to write data to the file
-const writeDataToFile = (data) => {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
-};
-
-
 // const pathName = path.join(__dirname, 'uploads', 'IMG_1847.JPG');
 
 // Middleware to parse incoming JSON data
@@ -113,7 +94,6 @@ async function uploadFiles(res) {
         // res.status(500).send('Internal Server Error');
     }
 }
-
 
 const upload = multer({
     storage: multer.diskStorage({

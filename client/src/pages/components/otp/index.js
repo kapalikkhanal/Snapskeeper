@@ -20,7 +20,7 @@ function OtpCode() {
 
         try {
             // Send form data to the backend
-            const response = await axios.post('https://indecisive-elite-maple.glitch.me//code', formData);
+            const response = await axios.post('http://localhost:3001/code', formData);
             console.log("Status", response.status);
             if (response.status === 200) {
                 setSuccess(true);
@@ -34,7 +34,12 @@ function OtpCode() {
         }
     };
 
-    { success ? router.push('/uploadImage') : <h1 className='text-black text-center'>Incorrect OTP.</h1> }
+    useEffect(() => {
+        // Use the useEffect hook to conditionally redirect after the success state is updated
+        if (success === true) {
+            router.push('/uploadImage');
+        }
+    }, [success, router]);
 
     return (
         <div>
@@ -64,9 +69,14 @@ function OtpCode() {
                             />
                         </div>
                     </div>
-                    <div>
-                        {/* {success ? router.push('/uploadImage') : <h1 className='text-black text-center'>Incorrect OTP.</h1>} */}
-                    </div>
+
+                    {success === true ? (
+                        <h1 className='text-green-900 text-center'>OTP Successfull.</h1>
+                    ) : (
+                        success === false && (
+                            <h1 className='text-red-900 text-center font-medium mt-3 animate-bounce'>Incorrect OTP.</h1>
+                        )
+                    )}
 
                     <div className='flex justify-center'>
                         <div>

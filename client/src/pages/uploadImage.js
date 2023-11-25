@@ -54,7 +54,7 @@ function App() {
     formData.append('image', selectedFile);
 
     try {
-      const response = await axios.post('https://indecisive-elite-maple.glitch.me//upload', formData, {
+      const response = await axios.post('http://localhost:3001/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -134,9 +134,10 @@ function App() {
                   <Image
                     src="/test.jpg"
                     alt="Upload Image"
-                    width={100}
+                    priority='true'
+                  width = { 100}
                     height={100}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
@@ -158,7 +159,6 @@ function App() {
           <button
             className='bg-black text-white p-4 mt-10 rounded-2xl w-48 mb-24'
             onClick={handleUpload}
-            disabled={loading}
           >
             {loading ? 'Uploading' : success ? 'Upload New Image' : 'Upload Image'}
           </button>
