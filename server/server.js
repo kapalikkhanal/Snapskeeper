@@ -242,6 +242,9 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     }
 });
 
+app.get('/test', async (req, res) => {
+    res.status(200).json('Server working fine.');
+});
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

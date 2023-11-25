@@ -54,7 +54,7 @@ function App() {
     formData.append('image', selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:3001/upload', formData, {
+      const response = await axios.post('https://indecisive-elite-maple.glitch.me/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
