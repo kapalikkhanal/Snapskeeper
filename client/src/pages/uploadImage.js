@@ -100,11 +100,11 @@ function App() {
 
 
         <div>
-          <h1 className='text-black font-medium text-3xl text-center p-5 mt-8'>
+          <h1 className='text-black font-medium text-3xl text-center p-5 mt-5'>
             Uploads the moments you captured.
           </h1>
         </div>
-        <div className='flex justify-center items-center flex-col mt-10'>
+        <div className='flex justify-center items-center flex-col mt-5'>
           <h1 className='text-black font-semibold'>Click on the Image to Upload.</h1>
           <h1 className='text-black font-bold'>Photo Gallery.</h1>
           <div>
@@ -120,7 +120,7 @@ function App() {
                   cursor: 'pointer',
                   overflow: 'hidden',
                 }}
-                className='border border-gray-500 mt-2 mb-4 shadow-inner bg-gray-300 drop-shadow-2xl'
+                className='border border-gray-500 mt-2 mb-4 bg-gray-300'
               >
                 {Emage ? (
                   <Image
@@ -157,7 +157,7 @@ function App() {
 
           </div>
           <button
-            className='bg-black text-white p-4 mt-10 rounded-2xl w-48 mb-24'
+            className='bg-black text-white p-4 mt-8 rounded-2xl w-48 mb-24'
             onClick={handleUpload}
           >
             {loading ? 'Uploading' : success ? 'Upload New Image' : 'Upload Image'}
