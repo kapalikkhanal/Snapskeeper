@@ -105,8 +105,8 @@ function OtpCode() {
                             </div>
                         )}
                     </div>
-                    <div className='flex justify-center mt-2'>
-                        <div className='flex flex-row w-48 space-x-4 items-center py-2'>
+                    <div className='flex justify-center items-center mt-2'>
+                        <div className='flex justify-center flex-row w-full space-x-4 items-center py-2'>
                             <input
                                 className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-4 leading-tight focus:outline-none"
                                 type="number"

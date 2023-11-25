@@ -186,7 +186,7 @@ function App() {
                   </div>
                 </div>
                 <button
-                  className="relative z-10 inline-flex items-center justify-center w-full text-center px-4 py-3 text-lg font-normal text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                  className="relative z-10 inline-flex items-center justify-center w-full text-center px-4 py-3 text-lg font-normal text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                   onClick={() => fileInputRef.current.click()}>
                   Choose Image
                 </button>
