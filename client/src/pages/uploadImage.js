@@ -12,7 +12,6 @@ function App() {
   const router = useRouter()
   const [selectedFile, setSelectedFile] = useState(null);
   const [Emage, setEmage] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
@@ -54,7 +53,7 @@ function App() {
     formData.append('image', selectedFile);
 
     try {
-      const response = await axios.post('https://indecisive-elite-maple.glitch.me/upload', formData, {
+      const response = await axios.post('http://localhost:3001/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -68,19 +67,21 @@ function App() {
     } finally {
       setLoading(false);
       setSuccess(true);
+      setSelectedFile(null);
+      setEmage(null);
     }
   };
 
-  if (success) {
-    const alertMessage = success ? 'Image uploaded successfully.' : 'Error sending Image. Please try again.';
-    toast({
-      title: alertMessage,
-      status: success ? 'success' : 'error',
-      duration: 3000,
-      isClosable: true,
-      position: 'top-right',
-    });
-  }
+  // if (success) {
+  //   const alertMessage = success ? 'Image uploaded successfully.' : 'Error sending Image. Please try again.';
+  //   toast({
+  //     title: alertMessage,
+  //     status: success ? 'success' : 'error',
+  //     duration: 3000,
+  //     isClosable: true,
+  //     position: 'top-right',
+  //   });
+  // }
 
   return (
     <>
@@ -135,15 +136,14 @@ function App() {
                     src="/test.jpg"
                     alt="Upload Image"
                     priority='true'
-                  width = { 100}
+                    width={100}
                     height={100}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
             </label>
           </div>
-          <input className='hidden' type="file" ref={fileInputRef} onChange={handleFileChange} id='upload-button' />
           <div>
             {
               loading ? (
@@ -154,14 +154,39 @@ function App() {
                 <span style={{ color: 'black' }}>&lsquo;Choose an Image from Gallery.&rsquo;</span>
               )
             }
-
           </div>
-          <button
+
+          {selectedFile ? (
+            <>
+              <input className='hidden' type="file" onChange={handleFileChange} id='upload-button' />
+              <button
+                className='bg-black text-white p-4 mt-8 rounded-2xl w-48 mb-24'
+                onClick={handleUpload}
+              >
+                {loading ? 'Uploading...' : success ? 'Upload Image' : 'Upload Image'}
+              </button>
+            </>
+          ) : (
+            <>
+              <button className='bg-black text-white p-4 mt-8 rounded-2xl w-48 mb-24'
+                onClick={() => fileInputRef.current.click()}>
+                Choose Image
+              </button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+                id='upload-button'
+              />
+            </>
+          )}
+          {/* <button
             className='bg-black text-white p-4 mt-8 rounded-2xl w-48 mb-24'
             onClick={handleUpload}
           >
             {loading ? 'Uploading' : success ? 'Upload New Image' : 'Upload Image'}
-          </button>
+          </button> */}
         </div>
 
         {/* Footer */}

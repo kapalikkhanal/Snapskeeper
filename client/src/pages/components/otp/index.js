@@ -23,7 +23,7 @@ function OtpCode() {
         try {
             setLoading(true);
             // Send form data to the backend
-            const response = await axios.post('https://indecisive-elite-maple.glitch.me/code', formData);
+            const response = await axios.post('http://localhost:3001/code', formData);
             console.log("Status", response.status);
             if (response.status === 200) {
                 setSuccess(true);

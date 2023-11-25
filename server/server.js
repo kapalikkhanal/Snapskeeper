@@ -3,7 +3,7 @@ const multer = require('multer');
 const { google } = require('googleapis')
 require('dotenv').config();
 
-// Nodemaile
+// Nodemailer
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
@@ -14,14 +14,11 @@ const port = process.env.PORT || 3001;
 // Enable CORS
 app.use(cors());
 
-const path = require('path')
-const fs = require('fs')
-
 const mime = require('mime-types');
-const dataFilePath = path.join(__dirname, 'data.json');
 
 let folderName;
-let filePath; // Declare filePath at a higher scope
+let fileBuffer;
+const { Readable } = require('stream');
 
 const timestamp = Date.now(); // Get the current timestamp
 
@@ -50,6 +47,7 @@ const drive = google.drive({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const upload = multer();
 
 async function uploadFiles(res) {
     try {
@@ -65,21 +63,26 @@ async function uploadFiles(res) {
         }
 
         // Continue with the file upload to the existing folder
-        const fileExtension = path.extname(filePath); // Get the file extension
+        const fileExtension = '.jpg'; // Get the file extension
         const dynamicMimeType = mime.lookup(fileExtension); // Get the MIME type based on the file extension
 
         console.log('Uploading to folder:', folderName);
         console.log('Folder ID:', [folderExists.id]);
 
+        // Create a readable stream from the file buffer
+        const readableStream = new Readable();
+        readableStream.push(fileBuffer);
+        readableStream.push(null); // Signals the end of the stream
+
         const response = await drive.files.create({
             requestBody: {
-                name: `image_${timestamp}.jpg`,
+                name: `image_${timestamp}${fileExtension}`,
                 mimeType: dynamicMimeType,
                 parents: [folderExists.id], // Use the folder ID as the parent
             },
             media: {
                 mimeType: dynamicMimeType,
-                body: fs.createReadStream(filePath)
+                body: readableStream,
             }
         });
 
@@ -94,24 +97,6 @@ async function uploadFiles(res) {
         // res.status(500).send('Internal Server Error');
     }
 }
-
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'uploads/'); // Specify the directory where you want to store the files
-        },
-        filename: function (req, file, cb) {
-            // Create a unique pathname using uuid
-            //const uniqueFilename = `${uuidv4()}-${file.originalname}`;
-            const uniqueFilename = `${file.originalname}`;
-            cb(null, uniqueFilename);
-
-            filePath = path.join(__dirname, 'uploads', uniqueFilename);
-
-            // uploadFiles();
-        },
-    }),
-});
 
 async function checkFolderExists(folderName) {
     try {
@@ -172,7 +157,7 @@ app.post('/submit', (req, res) => {
             </ol>
             <p><strong>Note:</strong> Please ensure that you use the payment details provided here to avoid any complications in the process.</p>
             <p><strong>Payment QR Code:</strong></p>
-            <img src="cid:qrCodeImage" alt="Payment QR Code" />
+            <img src="https://cdn.glitch.global/d9edf18a-29b4-4dab-a985-60e89666d719/qrCode.jpg?v=1700888691755" alt="Payment QR Code" />
             <p><strong>Next Steps:</strong></p>
             <p>Once the payment is successfully processed, our team will initiate the creation of your QR code for the photo uploading service. Please allow up to 8hrs for the process to be completed.</p>
             <p>We would like to express our gratitude for choosing our photo uploading service. We understand the importance of your time and trust, and we assure you that we are dedicated to providing you with a seamless experience.</p>
@@ -182,13 +167,6 @@ app.post('/submit', (req, res) => {
             <p><strong>Best regards,</strong></p>
             <p>Kapalik Khanal<br> Snapscapture.com</p>
         `,
-        attachments: [
-            {
-                filename: 'qrCode.jpg',
-                path: './public/qrCode.jpg',
-                cid: 'qrCodeImage',  // Set the content ID for the inline image
-            },
-        ],
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -235,6 +213,7 @@ app.post('/code', async (req, res) => {
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
         console.log('File received:', req.file);
+        fileBuffer = req.file.buffer; // Store the file buffer
         await uploadFiles(res); // Pass the 'res' object to the 'uploadFiles' function
     } catch (error) {
         console.error('Error:', error);
