@@ -100,11 +100,11 @@ function App() {
 
 
         <div>
-          <h1 className='text-black font-medium text-3xl text-center p-5 mt-5'>
+          <h1 className='text-black font-medium text-3xl text-center px-5 mt-2'>
             Uploads the moments you captured.
           </h1>
         </div>
-        <div className='flex justify-center items-center flex-col mt-5'>
+        <div className='flex justify-center items-center flex-col mt-2'>
           <h1 className='text-black font-semibold'>Click on the Image to Upload.</h1>
           <h1 className='text-black font-bold'>Photo Gallery.</h1>
           <div>
