@@ -101,12 +101,11 @@ function App() {
 
 
         <div>
-          <h1 className='text-black font-medium text-3xl text-center px-5 mt-2'>
+          <h1 className='text-black font-medium text-3xl text-center px-5 mt-5'>
             Uploads the moments you captured.
           </h1>
         </div>
         <div className='flex justify-center items-center flex-col mt-2'>
-          <h1 className='text-black font-semibold'>Click on the Image to Upload.</h1>
           <h1 className='text-black font-bold'>Photo Gallery.</h1>
           <div>
             <label htmlFor="upload-button">
@@ -151,7 +150,7 @@ function App() {
               ) : success ? (
                 <span style={{ color: 'green' }}>&lsquo;Image uploaded successfully.&rsquo;</span>
               ) : (
-                <span style={{ color: 'black' }}>&lsquo;Choose an Image from Gallery.&rsquo;</span>
+                <span style={{ color: 'black' }}>&lsquo;Choose an Image from the Gallery.&rsquo;</span>
               )
             }
           </div>
@@ -160,9 +159,9 @@ function App() {
             <>
               <input className='hidden' type="file" onChange={handleFileChange} id='upload-button' />
               <div className="relative mt-12">
-                <div className="absolute -inset-1">
+                <div className="absolute -inset-0">
                   <div
-                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-50 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                   </div>
                 </div>
                 <button
@@ -180,10 +179,10 @@ function App() {
             </>
           ) : (
             <>
-              <div className="relative mt-12">
-                <div className="absolute -inset-1">
+              <div className="relative mt-8">
+                <div className="absolute -inset-0">
                   <div
-                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-50 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                   </div>
                 </div>
                 <button

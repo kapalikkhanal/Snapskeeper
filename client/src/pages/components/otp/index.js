@@ -122,7 +122,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-4 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 name="code2"
@@ -136,7 +136,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-4 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -150,7 +150,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-4 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -174,7 +174,7 @@ function OtpCode() {
                                 </div>
                             </div>
                             <button
-                                className="relative z-10 inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                                className="relative z-10 inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                                 type='submit'>
                                 Enter
                             </button>

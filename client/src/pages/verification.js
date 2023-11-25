@@ -3,9 +3,9 @@ import React from 'react'
 function Button() {
   return (
     <div class="relative">
-      <div class="absolute -inset-1">
+      <div class="absolute -inset-0">
         <div
-          class="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+          class="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-50 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
         </div>
       </div>
       <a href="#" title=""
