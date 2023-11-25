@@ -71,12 +71,7 @@ function OtpCode() {
     useEffect(() => {
         // Use the useEffect hook to conditionally redirect after the success state is updated
         if (success === true) {
-            const timer = setTimeout(() => {
-                // Redirect to the next page after 2 seconds
-                router.push('/uploadImage');
-            }, 1900);
-            // Cleanup the timer to avoid memory leaks
-            return () => clearTimeout(timer);
+            router.push('/uploadImage');
         }
     }, [success, router]);
 
@@ -113,7 +108,7 @@ function OtpCode() {
                     <div className='flex justify-center mt-2'>
                         <div className='flex flex-row w-48 space-x-4 items-center py-2'>
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-4 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -127,7 +122,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 name="code2"
@@ -141,7 +136,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -155,7 +150,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-12 text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -173,9 +168,9 @@ function OtpCode() {
 
                     <div className='flex justify-center'>
                         <div className="relative mt-12">
-                            <div className="absolute -inset-1">
+                            <div className="absolute -inset-0">
                                 <div
-                                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-50 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                                 </div>
                             </div>
                             <button
