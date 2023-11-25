@@ -26,7 +26,7 @@ function ParticlesJS() {
                 },
                 "particles": {
                     "number": {
-                        "value": 12,
+                        "value": 7,
                         "density": {
                             "enable": false,
                             "value_area": 800
@@ -42,7 +42,7 @@ function ParticlesJS() {
                         }
                     },
                     "opacity": {
-                        "value": 0.8,
+                        "value": 0.5,
                         "random": false,
                         "anim": {
                             "enable": false,
