@@ -160,9 +160,9 @@ function App() {
             <>
               <input className='hidden' type="file" onChange={handleFileChange} id='upload-button' />
               <div className="relative mt-12">
-                <div className="absolute -inset-5">
+                <div className="absolute -inset-1">
                   <div
-                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-30 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                   </div>
                 </div>
                 <button
@@ -181,9 +181,9 @@ function App() {
           ) : (
             <>
               <div className="relative mt-12">
-                <div className="absolute -inset-5">
+                <div className="absolute -inset-1">
                   <div
-                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-30 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                   </div>
                 </div>
                 <button

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
+import Footer from '../footer';
 
 function OtpCode() {
     const router = useRouter()
@@ -98,15 +99,13 @@ function OtpCode() {
                         {loading ? (
                             <Image className='bg-inherit' src="/loading.gif" width={25} height={20} alt="Ripple SVG" />
                         ) : success ? (
-                            <div className='flex justify-center flex-col items-center w-full mt-[50%] z-50 fixed backdrop-filter backdrop-blur backdrop-opacity-80'>
-                                <Image className='' src={'/verify.gif'} width={1000} height={1000} alt='Verified' />
-                            </div>
+                            ''
                         ) : (
                             <div>
                                 {error ? (
                                     <span className='text-red-500 font-bold animate-bounce'>&lsquo;Incorrect OTP&rsquo;</span>
                                 ) : (
-                                    <span className='text-black font-semibold animate-bounce mt-2'>&lsquo;Enter the 4-digit Code.&rsquo;</span>
+                                    <span className='text-black font-semibold animate-bounce mt-2'>&lsquo;Enter the 4-digit code&rsquo;</span>
                                 )}
                             </div>
                         )}
@@ -114,7 +113,7 @@ function OtpCode() {
                     <div className='flex justify-center mt-2'>
                         <div className='flex flex-row w-48 space-x-4 items-center py-2'>
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -128,7 +127,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 name="code2"
@@ -142,7 +141,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -156,7 +155,7 @@ function OtpCode() {
                                 required
                             />
                             <input
-                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-3 leading-tight focus:outline-none"
+                                className="appearance-none bg-transparent border-b border-black bg-[#fcc4c4] rounded-md shadow-inner w-full text-center font-bold text-black placeholder:text-gray-900 placeholder:opacity-50 py-4 px-5 leading-tight focus:outline-none"
                                 type="number"
                                 aria-label="code"
                                 placeholder='0'
@@ -174,9 +173,9 @@ function OtpCode() {
 
                     <div className='flex justify-center'>
                         <div className="relative mt-12">
-                            <div className="absolute -inset-5">
+                            <div className="absolute -inset-1">
                                 <div
-                                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-30 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                                    className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-80 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
                                 </div>
                             </div>
                             <button
@@ -188,11 +187,7 @@ function OtpCode() {
                     </div>
                 </form>
             </div>
-            <footer
-                className="bg-gray-900 text-lg text-white text-center fixed inset-x-0 bottom-0 p-4 font-bold">
-                Go back to
-                <button onClick={() => { router.push('/') }} className='text-gray-200 p-1 m-2 bg-blue-900 rounded-2xl'>&nbsp;Upload photos.&nbsp;</button>
-            </footer>
+            <Footer />
         </div>
     );
 }
