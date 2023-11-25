@@ -11,6 +11,7 @@ function OtpCode() {
     });
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,19 +28,18 @@ function OtpCode() {
             if (response.status === 200) {
                 setSuccess(true);
                 setLoading(false);
+                setError(false);
             }
             else {
                 setLoading(flase);
                 setSuccess(false);
+                setError(true);
             }
         } catch (error) {
             console.error('Error submitting form:', error.message);
             setSuccess(false);
             setLoading(false);
-        }
-        finally {
-            setLoading(false);
-            setSuccess(true);
+            setError(true);
         }
     };
 
@@ -74,21 +74,32 @@ function OtpCode() {
                                 name="code"
                                 value={formData.code}
                                 onChange={handleChange}
+                                inputMode="numeric" // This suggests a numeric keyboard on mobile devices
+                                maxLength={4} // Limits the input to 4 characters
+                                pattern="[0-9]*" // Allows only numeric characters
+                                title="Please enter only numeric characters" // Displayed as a tooltip
                                 required
                             />
+
                         </div>
                     </div>
                     <div className='flex justify-center items-center mt-1'>
-                        {
-                            loading ? (
-                                <span style={{ color: 'blue' }}>&lsquo;Verifying...&rsquo;</span>
-                            ) : success ? (
-                                <span style={{ color: 'green' }}>&lsquo;Verified.&rsquo;</span>
-                            ) : (
-                                <span style={{ color: 'black', textAlign: 'center' }}>&lsquo;Enter the 4 digit Code.&rsquo;</span>
-                            )
-                        }
+                        {loading ? (
+                            <span style={{ color: 'blue' }}>&lsquo;Verifying...&rsquo;</span>
+                        ) : success ? (
+                            <span style={{ color: 'green' }}>&lsquo;Verified.&rsquo;</span>
+                        ) : (
+                            <div>
+                                {error ? (
+                                    <span className='text-red-500 font-bold animate-bounce'>&lsquo;Incorrect OTP&rsquo;</span>
+                                ) : (
+                                    <span className='text-black font-semibold animate-bounce mt-2'>&lsquo;Enter the 4-digit Code.&rsquo;</span>
+                                )}
+                            </div>
+                        )}
                     </div>
+
+
                     <div className='flex justify-center'>
                         <div>
                             <button
