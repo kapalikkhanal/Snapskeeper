@@ -10,7 +10,7 @@ function Footer() {
              inset-x-0 
              bottom-0 
              p-4
-             font-bold">
+             font-medium">
                 Need a QR Code?
                 <button onClick={() => { router.push('/qrCode') }} className='text-gray-200 p-1 m-2 bg-blue-900 rounded-2xl'>&nbsp;Contact Us&nbsp;</button>
             </footer>

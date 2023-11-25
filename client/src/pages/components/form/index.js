@@ -74,7 +74,7 @@ function ContactForm() {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className='flex justify-center'>
-                        <div className='flex flex-col w-48 items-center border-b border-black shadow-2xl py-2'>
+                        <div className='flex flex-col w-48 items-center border-b border-black py-2'>
                             <label className='text-black font-medium text-center' htmlFor="name">Name</label>
                             <input
                                 className="appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -90,7 +90,7 @@ function ContactForm() {
                     </div>
                     <br />
                     <div className='flex justify-center'>
-                        <div className='flex flex-col w-48 items-center border-b border-black shadow-2xl py-2'>
+                        <div className='flex flex-col w-48 items-center border-b border-black py-2'>
                             <label className='text-black font-medium text-center' htmlFor="phone">Phone</label>
                             <input
                                 className="appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -106,7 +106,7 @@ function ContactForm() {
                     </div>
                     <br />
                     <div className='flex justify-center'>
-                        <div className='flex flex-col w-48 items-center border-b border-black shadow-2xl py-2'>
+                        <div className='flex flex-col w-48 items-center border-b border-black py-2'>
                             <label className='text-black font-medium text-center' htmlFor="email">Email</label>
                             <input
                                 className="appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -131,13 +131,26 @@ function ContactForm() {
                     </div>
                     <div className='flex justify-center'>
                         <div>
-                            <button
+                            <div className="relative mt-10">
+                                <div className="absolute -inset-5">
+                                    <div
+                                        className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-30 blur-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
+                                    </div>
+                                </div>
+                                <button
+                                    className="relative z-10 inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                                    type='submit'
+                                    disabled={loading}>
+                                    {loading ? 'Sending...' : 'Send Mail'}
+                                </button>
+                            </div>
+                            {/* <button
                                 className='bg-black text-white p-4 mt-10 rounded-2xl w-40 mb-24'
                                 type="submit"
                                 disabled={loading} // Disable the button while loading
                             >
                                 {loading ? 'Sending...' : 'Send Mail'}
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </form>
