@@ -139,6 +139,36 @@ app.post('/submit', (req, res) => {
         }
     });
 
+    // const mailOptions = {
+    //     from: "Snaps Capture",
+    //     to: email,
+    //     subject: 'Thank you for contacting us!',
+    //     html: `
+    //         <p>Dear ${name},</p>
+    //         <p>Thank you for choosing our photo uploading service! We appreciate your trust in us.</p>
+    //         <p>To proceed with obtaining your QR code, please follow the instructions below:</p>
+    //         <p><strong>Payment Details:</strong></p>
+    //         <p>The service fee for obtaining your QR code is Rs. 1000. You can make the payment through any secure payment gateway [eSewa, Khalti, IME Pay, etc.].</p>
+    //         <p><strong>Payment Process:</strong></p>
+    //         <ol>
+    //             <li>Scan the attached QR code using your preferred payment app.</li>
+    //             <li>Enter the amount as Rs. 1000.</li>
+    //             <li>Confirm the payment.</li>
+    //         </ol>
+    //         <p><strong>Note:</strong> Please ensure that you use the payment details provided here to avoid any complications in the process.</p>
+    //         <p><strong>Payment QR Code:</strong></p>
+    //         <img src="https://cdn.glitch.global/d9edf18a-29b4-4dab-a985-60e89666d719/qrCode.jpg?v=1700888691755" alt="Payment QR Code" />
+    //         <p><strong>Next Steps:</strong></p>
+    //         <p>Once the payment is successfully processed, our team will initiate the creation of your QR code for the photo uploading service. Please allow up to 8hrs for the process to be completed.</p>
+    //         <p>We would like to express our gratitude for choosing our photo uploading service. We understand the importance of your time and trust, and we assure you that we are dedicated to providing you with a seamless experience.</p>
+    //         <p><strong>Contact Information:</strong></p>
+    //         <p>If you encounter any issues during the payment process or have any questions, feel free to reach out to us at kapalikkhanal@gmail.com or +977-9860364927. We are here to assist you.</p>
+    //         <p>Thank you once again for choosing us. We look forward to serving you!</p>
+    //         <p><strong>Best regards,</strong></p>
+    //         <p>Kapalik Khanal<br> Snapscapture.com</p>
+    //     `,
+    // };
+
     const mailOptions = {
         from: "Snaps Capture",
         to: email,
@@ -148,21 +178,12 @@ app.post('/submit', (req, res) => {
             <p>Thank you for choosing our photo uploading service! We appreciate your trust in us.</p>
             <p>To proceed with obtaining your QR code, please follow the instructions below:</p>
             <p><strong>Payment Details:</strong></p>
-            <p>The service fee for obtaining your QR code is Rs. 1000. You can make the payment through any secure payment gateway [eSewa, Khalti, IME Pay, etc.].</p>
-            <p><strong>Payment Process:</strong></p>
-            <ol>
-                <li>Scan the attached QR code using your preferred payment app.</li>
-                <li>Enter the amount as Rs. 1000.</li>
-                <li>Confirm the payment.</li>
-            </ol>
-            <p><strong>Note:</strong> Please ensure that you use the payment details provided here to avoid any complications in the process.</p>
-            <p><strong>Payment QR Code:</strong></p>
-            <img src="https://cdn.glitch.global/d9edf18a-29b4-4dab-a985-60e89666d719/qrCode.jpg?v=1700888691755" alt="Payment QR Code" />
+            <p>The service fee for obtaining your QR code is FREE.</p>
             <p><strong>Next Steps:</strong></p>
             <p>Once the payment is successfully processed, our team will initiate the creation of your QR code for the photo uploading service. Please allow up to 8hrs for the process to be completed.</p>
             <p>We would like to express our gratitude for choosing our photo uploading service. We understand the importance of your time and trust, and we assure you that we are dedicated to providing you with a seamless experience.</p>
             <p><strong>Contact Information:</strong></p>
-            <p>If you encounter any issues during the payment process or have any questions, feel free to reach out to us at kapalikkhanal@gmail.com or +977-9860364927. We are here to assist you.</p>
+            <p>If you encounter any issues during the payment process or have any questions, feel free to reach out to us at kapalikkhanal@gmail.com. We are here to assist you.</p>
             <p>Thank you once again for choosing us. We look forward to serving you!</p>
             <p><strong>Best regards,</strong></p>
             <p>Kapalik Khanal<br> Snapscapture.com</p>
